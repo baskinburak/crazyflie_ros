@@ -1028,9 +1028,10 @@ void CrazyflieBroadcaster::send2Packets(
 }
 
 void CrazyflieBroadcaster::trajectoryStart(
-  uint8_t group)
+  uint8_t group,
+  bool reversed)
 {
-  crtpTrajectoryStartRequest request(group);
+  crtpTrajectoryStartRequest request(group, reversed);
   sendPacket((const uint8_t*)&request, sizeof(request));
 }
 
