@@ -877,6 +877,15 @@ void Crazyflie::avoidTarget(
   handleRequests();
 }
 
+
+void Crazyflie::boids(uint8_t id, uint8_t type, float x, float y, float z) {
+	crtpTrajectoryStartBoidsRequest request(id, type, x, y, z);
+
+	startBatchRequest();
+	addRequest(request, 2);
+	handleRequests();
+}
+
 void Crazyflie::setGroup(
   uint8_t group)
 {

@@ -10,6 +10,7 @@
 #include "crazyflie_driver/UploadTrajectory.h"
 #include "crazyflie_driver/StartCannedTrajectory.h"
 #include "crazyflie_driver/AvoidTarget.h"
+#include "crazyflie_driver/Boids.h"
 #undef major
 #undef minor
 #include "crazyflie_driver/SetEllipse.h"
@@ -184,6 +185,7 @@ public:
     , m_serviceLand()
     , m_serviceHover()
     , m_serviceAvoidTarget()
+		, m_serviceBoids()
     , m_serviceSetGroup()
     , m_logBlocks(log_blocks)
     , m_forceNoCache(force_no_cache)
@@ -196,6 +198,7 @@ public:
     m_serviceLand = n.advertiseService(tf_prefix + "/land", &CrazyflieROS::land, this);
     m_serviceHover = n.advertiseService(tf_prefix + "/hover", &CrazyflieROS::hover, this);
     m_serviceAvoidTarget = n.advertiseService(tf_prefix + "/avoid_target", &CrazyflieROS::avoidTarget, this);
+		m_serviceBoids = n.advertiseService(tf_prefix + "/boids", &CrazyflieROS::boids, this);
     m_serviceSetGroup = n.advertiseService(tf_prefix + "/set_group", &CrazyflieROS::setGroup, this);
 
     if (m_enableLogging) {
@@ -407,6 +410,17 @@ public:
     return true;
   }
 
+	bool boids(
+		crazyflie_driver::Boids::Request& req,
+		crazyflie_driver::Boids::Response& res)
+	{
+		ROS_INFO("[%s] Boids", m_frame.c_str());
+		m_cf.boids(
+			req.id, req.type, req.dest.x, req.dest.y, req.dest.z);
+
+		return true;
+	}
+
   bool avoidTarget(
     crazyflie_driver::AvoidTarget::Request& req,
     crazyflie_driver::AvoidTarget::Response& res)
@@ -576,6 +590,7 @@ private:
   ros::ServiceServer m_serviceLand;
   ros::ServiceServer m_serviceHover;
   ros::ServiceServer m_serviceAvoidTarget;
+	ros::ServiceServer m_serviceBoids;
   ros::ServiceServer m_serviceSetGroup;
 
   std::vector<crazyflie_driver::LogBlock> m_logBlocks;

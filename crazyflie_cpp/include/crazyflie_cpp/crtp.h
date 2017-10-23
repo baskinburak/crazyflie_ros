@@ -708,6 +708,26 @@ struct crtpTrajectoryStartAvoidTargetRequest
 } __attribute__((packed));
 CHECKSIZE(crtpTrajectoryStartAvoidTargetRequest)
 
+struct crtpTrajectoryStartBoidsRequest
+{
+  crtpTrajectoryStartBoidsRequest(
+    uint8_t id, uint8_t type, float x, float y, float z)
+    : header(14, 1)
+    , command(COMMAND_START_BOIDS)
+    {
+      data.id = id;
+			data.type = type;
+			data.x = x;
+			data.y = y;
+			data.z = z;
+    }
+
+    const crtp header;
+    const uint8_t command;
+    struct data_start_boids data;
+} __attribute__((packed));
+CHECKSIZE(crtpTrajectoryStartBoidsRequest)
+
 struct crtpTrajectorySetGroupRequest
 {
   crtpTrajectorySetGroupRequest(

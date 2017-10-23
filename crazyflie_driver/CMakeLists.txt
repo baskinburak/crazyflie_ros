@@ -41,6 +41,7 @@ add_service_files(
   FILES
   AddCrazyflie.srv
   AvoidTarget.srv
+	Boids.srv
   GoHome.srv
   Hover.srv
   Land.srv
@@ -146,8 +147,6 @@ add_executable(crazyflie_add
 add_dependencies(crazyflie_add
   crazyflie_driver_generate_messages_cpp
 )
-
-add_dependencies(crazyflie_add ${${PROJECT_NAME}}_EXPORTED_TARGETS ${catkin_EXPORTED_TARGETS})
 
 target_link_libraries(crazyflie_add
   ${catkin_LIBRARIES}

@@ -236,6 +236,8 @@ public:
     float x, float y, float z,
     float max_displacement, float max_speed);
 
+	void boids(uint8_t id, uint8_t type, float x, float y, float z);
+
   void setGroup(
     uint8_t group);
 
